@@ -1,6 +1,6 @@
 local main = {}
 
-function main.init(e)
+function main.init()
   local crafting_speed_modifier = 10 -- 10x speed
   local distance_bonus = 125
   local inventory_slots_bonus = 60

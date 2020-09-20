@@ -123,7 +123,7 @@ function update_gui()
   end
 end
 
-function main.init(e)
+function main.init()
   init_globals()
 
   for _, player in pairs(game.players) do
@@ -135,7 +135,7 @@ function main.init_player(e)
   init_player(game.players[e.player_index])
 end
 
-function main.tick(e)
+function main.tick()
   if (game.tick % 100) == 0 then
     get_time()
 

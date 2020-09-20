@@ -132,7 +132,7 @@ local function find_drills(entity)
   end
 end
 
-function main.init(e)
+function main.init()
   global.max_radius = 0.99
 
   for _, drill in pairs(find_all_entities('mining-drill')) do
