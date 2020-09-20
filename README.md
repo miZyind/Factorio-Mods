@@ -7,9 +7,10 @@
 - **1.0**
 
 ## 🙏 Thanks To
+- @binbinhfr for [Big Bags](https://mods.factorio.com/mod/BigBags)
 - @mindmix for [Auto Deconstruct](https://mods.factorio.com/mod/AutoDeconstruct)
 - @Supercheese for [Squeak Through](https://mods.factorio.com/mod/Squeak%20Through)
-- @keyboardhack for [WaiTex](https://mods.factorio.com/mod/WaiTex_Full)
+- @keyboardhack for [Wai Tex](https://mods.factorio.com/mod/WaiTex_Full)
 - @binbinhfr for [Time Tools](https://mods.factorio.com/mod/TimeTools)
 
 ## 💠 Development Environment & Tools
@@ -17,12 +18,13 @@
 - Lua = 5.2.1
 
 ## 🗂 Mod List
-|     Name    |                              Description                             |
-|:-----------:|:--------------------------------------------------------------------:|
-|  Destructor | Marks drills that have no more resources to mine for deconstruction. |
-|    Dodger   |           No more frustration when walking about your base           |
-| HD Textures |              HD textures for the remaining vanilla items             |
-|    Timer    |                  Clock, daylight, game speed tweaks                  |
+|     Name    |                             Description                             |
+|:-----------:|:-------------------------------------------------------------------:|
+|  Backpacker |                      Character forces extension                     |
+|  Destructor | Marks drills that have no more resources to mine for deconstruction |
+|    Dodger   |           No more frustration when walking about your base          |
+| HD Textures |             HD textures for the remaining vanilla items             |
+|    Timer    |                  Clock, daylight, game speed tweaks                 |
 
 ## 🖋 Author
 miZyind <mizyind@gmail.com>
