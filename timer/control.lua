@@ -1,8 +1,14 @@
+local main = {}
 local ticks_per_day = 25000
 local colors = {
-	white = {r = 1, g = 1, b = 1},
-	yello = {r = 1, g = 1, b = 0},
+  white = {r = 1, g = 1, b = 1},
+  yello = {r = 1, g = 1, b = 0},
 }
+
+local function init_player(player)
+  if global.ticks == nil then return end
+  if player.connected then build_gui(player) end
+end
 
 local function init_day()
   global.day = 1 + math.floor((game.tick+(ticks_per_day/2)) / ticks_per_day)
@@ -38,6 +44,10 @@ local function get_time()
   global.h_prev = global.h
 end
 
+local function format_time()
+  return string.format("%ud %02u:%02u", global.day, global.h, global.m)
+end
+
 local function init_globals()
   global.ticks = global.ticks or 0
   global.cycles = global.cycles or 0
@@ -56,90 +66,6 @@ local function init_globals()
 
   if global.display == nil then global.display = true end
 end
-
-local function init_player(player)
-  if global.ticks == nil then return end
-  if player.connected then build_gui(player) end
-end
-
-local function init_players()
-  for _, player in pairs(game.players) do
-    init_player(player)
-  end
-end
-
-script.on_init(function ()
-  init_globals()
-  init_players()
-end)
-
-script.on_event(defines.events.on_player_created, function (event)
-  init_player(game.players[event.player_index])
-end)
-
-script.on_event(defines.events.on_player_joined_game, function (event)
-  init_player(game.players[event.player_index])
-end)
-
-local function format_time()
-  return string.format("%ud %02u:%02u", global.day, global.h, global.m)
-end
-
-script.on_event(defines.events.on_tick, function (event)
-  if (game.tick % 100) == 0 then
-    get_time()
-
-    if global.display then
-      local time = format_time()
-      local root
-
-      for _, player in pairs(game.players) do
-        if player.connected and player.gui.screen.timer_root then
-          root = player.gui.screen.timer_root
-
-          if root.timer_time == nil then
-            root.destroy()
-            init_player(player)
-            update_gui()
-            root = player.gui.screen.timer_root
-          end
-
-          root.timer_time.caption = time
-
-          if global.refresh_always_day then
-            if global.surface.always_day then
-              root.timer_daynight.sprite = "sprite_timer_day"
-            else
-              root.timer_daynight.sprite = "sprite_timer_daynight"
-            end
-          end
-        end
-      end
-
-      global.refresh_always_day = false
-    end
-  end
-end)
-
-local function on_gui_click(event)
-  local player = game.players[event.player_index]
-
-  if string.match(event.element.name, "timer_") == nil then return end
-
-  if player.admin then
-    if event.element.name == "timer_time" then
-      if game.speed == 1 then game.speed = 64 else game.speed = 1 end
-      update_gui()
-    elseif event.element.name == "timer_daynight" then
-      global.surface.always_day = not global.surface.always_day
-      update_gui()
-    end
-  else
-    player.print("Only admins may change time.")
-  end
-end
-
-script.on_event(defines.events.on_gui_click, on_gui_click)
 
 function build_gui(player)
   local root = player.gui.screen.timer_root
@@ -196,3 +122,77 @@ function update_gui()
     end
   end
 end
+
+function main.init(e)
+  init_globals()
+
+  for _, player in pairs(game.players) do
+    init_player(player)
+  end
+end
+
+function main.init_player(e)
+  init_player(game.players[e.player_index])
+end
+
+function main.tick(e)
+  if (game.tick % 100) == 0 then
+    get_time()
+
+    if global.display then
+      local time = format_time()
+      local root
+
+      for _, player in pairs(game.players) do
+        if player.connected and player.gui.screen.timer_root then
+          root = player.gui.screen.timer_root
+
+          if root.timer_time == nil then
+            root.destroy()
+            init_player(player)
+            update_gui()
+            root = player.gui.screen.timer_root
+          end
+
+          root.timer_time.caption = time
+
+          if global.refresh_always_day then
+            if global.surface.always_day then
+              root.timer_daynight.sprite = "sprite_timer_day"
+            else
+              root.timer_daynight.sprite = "sprite_timer_daynight"
+            end
+          end
+        end
+      end
+
+      global.refresh_always_day = false
+    end
+  end
+end
+
+function main.click(e)
+  local player = game.players[e.player_index]
+
+  if string.match(e.element.name, "timer_") == nil then return end
+
+  if player.admin then
+    if e.element.name == "timer_time" then
+      if game.speed == 1 then game.speed = 64 else game.speed = 1 end
+      update_gui()
+    elseif e.element.name == "timer_daynight" then
+      global.surface.always_day = not global.surface.always_day
+      update_gui()
+    end
+  else
+    player.print("Only admins may change time.")
+  end
+end
+
+return {
+  on_init = main.init,
+  on_player_created = main.init_player,
+  on_player_joined_game = main.init_player,
+  on_tick = main.tick,
+  on_gui_click = main.click,
+}

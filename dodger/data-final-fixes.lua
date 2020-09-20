@@ -1,4 +1,4 @@
-require("config")
+require("main")
 
 -- Prototype names and types to not alter.
 local excluded_prototype_names = {}

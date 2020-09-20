@@ -320,6 +320,7 @@ end
 
 function AddLayers(t, key, settingsChanges)
   require("util")
+
   local holdT = util.table.deepcopy(t)
   local index = 1
   if key == nil then
