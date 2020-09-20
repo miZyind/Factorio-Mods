@@ -12,6 +12,7 @@
 - @Supercheese for [Squeak Through](https://mods.factorio.com/mod/Squeak%20Through)
 - @keyboardhack for [Wai Tex](https://mods.factorio.com/mod/WaiTex_Full)
 - @binbinhfr for [Time Tools](https://mods.factorio.com/mod/TimeTools)
+- @trold for [Bottleneck](https://mods.factorio.com/mod/Bottleneck)
 
 ## 💠 Development Environment & Tools
 - Visual Studio Code
