@@ -1,9 +1,8 @@
 local main = {}
-local ticks_per_day = 25000
-local colors = {
-  white = {r = 1, g = 1, b = 1},
-  yello = {r = 1, g = 1, b = 0},
-}
+
+local SPEED = 64
+local TICKS_PER_DAY = 25000
+local COLORS = { white = {r = 1, g = 1, b = 1}, yellow = {r = 1, g = 1, b = 0} }
 
 local function init_player(player)
   if global.ticks == nil then return end
@@ -11,13 +10,10 @@ local function init_player(player)
 end
 
 local function init_day()
-  global.day = 1 + math.floor((game.tick+(ticks_per_day/2)) / ticks_per_day)
+  global.day = 1 + math.floor((game.tick+(TICKS_PER_DAY / 2)) / TICKS_PER_DAY)
 end
 
 local function get_time()
-  -- daytime : 0.0 to 1.0, noon to noon (midnight at 0.5), max light to min light to max light...
-  -- game starts at daytime = 0, so noon of day 1.
-
   local daytime
   local always_day = global.surface.always_day
 
@@ -26,7 +22,7 @@ local function get_time()
   end
 
   if always_day then
-    daytime = game.tick / ticks_per_day
+    daytime = game.tick / TICKS_PER_DAY
     daytime = daytime - math.floor(daytime)
   else
     if global.always_day == true then
@@ -39,7 +35,7 @@ local function get_time()
   daytime = (daytime*24+12) % 24
   global.h = math.floor(daytime)
   global.m = math.floor((daytime-global.h)*60)
-  global.day = math.floor((game.tick+(ticks_per_day/2)) / ticks_per_day) + 1
+  global.day = math.floor((game.tick+(TICKS_PER_DAY/2)) / TICKS_PER_DAY) + 1
   global.always_day = always_day
   global.h_prev = global.h
 end
@@ -92,9 +88,9 @@ function build_gui(player)
     })
 
     if global.surface.always_day then
-      button_daynight.sprite = "sprite_timer_day"
+      button_daynight.sprite = "timer_sprite_day"
     else
-      button_daynight.sprite = "sprite_timer_daynight"
+      button_daynight.sprite = "timer_sprite_daynight"
     end
   end
 
@@ -108,19 +104,23 @@ function update_gui()
         local root = build_gui(player)
 
         if game.speed == 1 then
-          root.timer_time.style.font_color = colors.white
+          root.timer_time.style.font_color = COLORS.white
         else
-          root.timer_time.style.font_color = colors.yello
+          root.timer_time.style.font_color = COLORS.yellow
         end
 
         if global.surface.always_day then
-          root.timer_daynight.sprite = "sprite_timer_day"
+          root.timer_daynight.sprite = "timer_sprite_day"
         else
-          root.timer_daynight.sprite = "sprite_timer_daynight"
+          root.timer_daynight.sprite = "timer_sprite_daynight"
         end
       end
     end
   end
+end
+
+function toggle_speed()
+  if game.speed == 1 then game.speed = SPEED else game.speed = 1 end
 end
 
 function main.init()
@@ -158,9 +158,9 @@ function main.tick()
 
           if global.refresh_always_day then
             if global.surface.always_day then
-              root.timer_daynight.sprite = "sprite_timer_day"
+              root.timer_daynight.sprite = "timer_sprite_day"
             else
-              root.timer_daynight.sprite = "sprite_timer_daynight"
+              root.timer_daynight.sprite = "timer_sprite_daynight"
             end
           end
         end
@@ -172,13 +172,13 @@ function main.tick()
 end
 
 function main.click(e)
-  local player = game.players[e.player_index]
-
   if string.match(e.element.name, "timer_") == nil then return end
+
+  local player = game.players[e.player_index]
 
   if player.admin then
     if e.element.name == "timer_time" then
-      if game.speed == 1 then game.speed = 64 else game.speed = 1 end
+      toggle_speed()
       update_gui()
     elseif e.element.name == "timer_daynight" then
       global.surface.always_day = not global.surface.always_day
@@ -188,6 +188,19 @@ function main.click(e)
     player.print("Only admins may change time.")
   end
 end
+
+function main.hotkey(e)
+  local player = game.players[e.player_index]
+
+  if player.admin then
+    toggle_speed()
+    update_gui()
+  else
+    player.print("Only admins may change time.")
+  end
+end
+
+script.on_event("timer_hotkey", main.hotkey)
 
 return {
   on_init = main.init,

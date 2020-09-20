@@ -1,8 +1,9 @@
-local factor = 10
+local FACTOR = 10
 
 local function calc_size(default)
   if default == nil then default = 1 end
-  local size = default * factor
+
+  local size = default * FACTOR
 
   if size > default then
     return (size)

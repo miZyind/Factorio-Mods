@@ -1,7 +1,13 @@
-local MOD_NAME = "__base__/mods/timer"
+local MOD_PATH = "__base__/mods/timer"
 
 data:extend(
   {
+    {
+      type = "custom-input",
+      name = "timer_hotkey",
+      key_sequence = "SHIFT + GRAVE",
+      consuming = "none",
+    },
     {
       type = "font",
       name = "timer_font",
@@ -11,15 +17,17 @@ data:extend(
     },
     {
       type = "sprite",
-      name = "sprite_timer_day",
-      filename = MOD_NAME.."/graphics/day.png",
+      name = "timer_sprite_day",
+      filename = MOD_PATH.."/graphics/day.png",
+      priority = "extra-high",
       width = 32,
       height = 32,
     },
     {
       type = "sprite",
-      name = "sprite_timer_daynight",
-      filename = MOD_NAME.."/graphics/daynight.png",
+      name = "timer_sprite_daynight",
+      filename = MOD_PATH.."/graphics/daynight.png",
+      priority = "extra-high",
       width = 32,
       height = 32,
     },

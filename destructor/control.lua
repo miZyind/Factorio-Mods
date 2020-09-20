@@ -159,8 +159,8 @@ end
 
 return {
   on_init = main.init,
-  on_cancelled_deconstruction = main.cancelled,
-  on_resource_depleted = main.depleted,
-  on_robot_built_entity = main.built,
   on_built_entity = main.built,
+  on_robot_built_entity = main.built,
+  on_resource_depleted = main.depleted,
+  on_cancelled_deconstruction = main.cancelled,
 }

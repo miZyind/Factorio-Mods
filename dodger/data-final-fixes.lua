@@ -1,4 +1,4 @@
-local prototype_type_gap_requirements =
+local PROTOTYPE_TYPE_GAP_REQUIREMENTS =
 {
   ["solar-panel"]              = 0.25,
   ["simple-entity-with-owner"] = 0.25,
@@ -29,7 +29,7 @@ local prototype_type_gap_requirements =
   ["lab"]                      = 0.25
 }
 
-local exclusions =
+local EXCLUSIONS =
 {
   {  -- General Exclusions
     excluded_prototype_names = {}
@@ -64,15 +64,15 @@ local exclusions =
 }
 
 -- Prototype names and types to not alter.
-local excluded_prototype_names = {}
-local excluded_prototype_types = {}
+local EXCLUDED_PROTOTYPE_NAMES = {}
+local EXCLUDED_PROTOTYPE_TYPES = {}
 
 -- Helper functions to check if a prototype name or type is excluded.
 local function prototype_name_excluded(name)
-  return excluded_prototype_names[name]
+  return EXCLUDED_PROTOTYPE_NAMES[name]
 end
 local function prototype_type_excluded(type)
-  return excluded_prototype_types[type]
+  return EXCLUDED_PROTOTYPE_TYPES[type]
 end
 
 -- Update the exclusion arrays by parsing an exclusion (from config.lua).
@@ -80,13 +80,13 @@ local function apply_exclusion(exclusion)
 
   if exclusion.excluded_prototype_names then
     for _, n in pairs(exclusion.excluded_prototype_names) do
-      excluded_prototype_names[n] = true
+      EXCLUDED_PROTOTYPE_NAMES[n] = true
     end
   end
 
   if exclusion.excluded_prototype_types then
     for _, t in pairs(exclusion.excluded_prototype_types) do
-      excluded_prototype_types[t] = true
+      EXCLUDED_PROTOTYPE_TYPES[t] = true
     end
   end
 end
@@ -109,7 +109,7 @@ local function apply_exclusions()
     return false
   end
 
-  for _, e in pairs(exclusions) do
+  for _, e in pairs(EXCLUSIONS) do
     if exclusion_applies(e) then
       apply_exclusion(e)
     end
@@ -150,9 +150,9 @@ local function adjust_coordinate_to_form_gap(coordinate, required_gap)
   return coordinate
 end
 
--- Checks all existing prototypes listed in prototype_type_gap_requirements and reduces their collision box to make a gap large enough to walk though if it is not already.
+-- Checks all existing prototypes listed in PROTOTYPE_TYPE_GAP_REQUIREMENTS and reduces their collision box to make a gap large enough to walk though if it is not already.
 local function adjust_collision_boxes()
-  for prototype_type, required_gap in pairs(prototype_type_gap_requirements) do
+  for prototype_type, required_gap in pairs(PROTOTYPE_TYPE_GAP_REQUIREMENTS) do
     -- Don't shrink prototypes of this type if they've been excluded.
     if not prototype_type_excluded(prototype_type) then
       for prototype_name, prototype in pairs(data.raw[prototype_type]) do
