@@ -16,13 +16,13 @@ end
 local function apply_exclusion(exclusion)
 
   if exclusion.excluded_prototype_names then
-    for _,n in pairs(exclusion.excluded_prototype_names) do
+    for _, n in pairs(exclusion.excluded_prototype_names) do
       excluded_prototype_names[n] = true
     end
   end
 
   if exclusion.excluded_prototype_types then
-    for _,t in pairs(exclusion.excluded_prototype_types) do
+    for _, t in pairs(exclusion.excluded_prototype_types) do
       excluded_prototype_types[t] = true
     end
   end
@@ -46,7 +46,7 @@ local function apply_exclusions()
     return false
   end
 
-  for _,e in pairs(exclusions) do
+  for _, e in pairs(exclusions) do
     if exclusion_applies(e) then
       apply_exclusion(e)
     end

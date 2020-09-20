@@ -341,7 +341,7 @@ function AddLayers(t, key, settingsChanges)
 end
 
 function ChangeSettings(t, settingsChanges)
-  for _,v in pairs(settingsChanges) do
+  for _, v in pairs(settingsChanges) do
     t[v[1]] = v[2]
   end
 end
