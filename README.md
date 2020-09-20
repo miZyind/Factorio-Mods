@@ -24,6 +24,7 @@
 |  Destructor | Marks drills that have no more resources to mine for deconstruction |
 |    Dodger   |           No more frustration when walking about your base          |
 | HD Textures |             HD textures for the remaining vanilla items             |
+|    Signal   |                    Locates input starved machines                   |
 |    Timer    |                  Clock, daylight, game speed tweaks                 |
 
 ## 🖋 Author
