@@ -1,3 +1,5 @@
+local MOD_NAME = "__base__/mods/timer"
+
 data:extend(
   {
     {
@@ -10,14 +12,14 @@ data:extend(
     {
       type = "sprite",
       name = "sprite_timer_day",
-      filename = "__base__/mods/time-tools/graphics/day.png",
+      filename = MOD_NAME.."/graphics/day.png",
       width = 32,
       height = 32,
     },
     {
       type = "sprite",
       name = "sprite_timer_daynight",
-      filename = "__base__/mods/time-tools/graphics/daynight.png",
+      filename = MOD_NAME.."/graphics/daynight.png",
       width = 32,
       height = 32,
     },
