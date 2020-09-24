@@ -28,6 +28,7 @@
 |   Gunfire   |                         Adds gunfire effects                        |
 | HD Textures |             HD textures for the remaining vanilla items             |
 |  Humanized  |                      Turns monsters into people                     |
+|  Quickstart |              Skip start scene and collect debris items              |
 |    Signal   |                    Locates input starved machines                   |
 |    Timer    |                  Clock, daylight, game speed tweaks                 |
 
