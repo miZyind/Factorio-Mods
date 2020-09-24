@@ -7,11 +7,11 @@
 - **1.0**
 
 ## 🙏 Thanks To
-- @binbinhfr for [Big Bags](https://mods.factorio.com/mod/BigBags)
+- @binbinhfr for [Big Bags](https://mods.factorio.com/mod/BigBags), [Time Tools](https://mods.factorio.com/mod/TimeTools)
 - @mindmix for [Auto Deconstruct](https://mods.factorio.com/mod/AutoDeconstruct)
 - @Supercheese for [Squeak Through](https://mods.factorio.com/mod/Squeak%20Through)
+- @Earendel for [Bullet Trails](https://mods.factorio.com/mod/bullet-trails)
 - @keyboardhack for [Wai Tex](https://mods.factorio.com/mod/WaiTex_Full)
-- @binbinhfr for [Time Tools](https://mods.factorio.com/mod/TimeTools)
 - @trold for [Bottleneck](https://mods.factorio.com/mod/Bottleneck)
 
 ## 💠 Development Environment & Tools
@@ -24,6 +24,7 @@
 |  Backpacker |                      Character forces extension                     |
 |  Destructor | Marks drills that have no more resources to mine for deconstruction |
 |    Dodger   |           No more frustration when walking about your base          |
+|   Gunfire   |                         Adds gunfire effects                        |
 | HD Textures |             HD textures for the remaining vanilla items             |
 |    Signal   |                    Locates input starved machines                   |
 |    Timer    |                  Clock, daylight, game speed tweaks                 |
