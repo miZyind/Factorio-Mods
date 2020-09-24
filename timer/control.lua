@@ -33,22 +33,26 @@ local function get_time()
   end
 
   daytime = (daytime*24+12) % 24
+  global.day = math.floor((game.tick + ( TICKS_PER_DAY / 2)) / TICKS_PER_DAY) + 1
   global.h = math.floor(daytime)
-  global.m = math.floor((daytime-global.h)*60)
-  global.day = math.floor((game.tick+(TICKS_PER_DAY/2)) / TICKS_PER_DAY) + 1
+  global.m = math.floor((daytime - global.h) * 60)
+  global.ph = math.floor(game.tick / 216000)
+  global.pm = math.floor(game.tick / 3600)
   global.always_day = always_day
-  global.h_prev = global.h
 end
 
-local function format_time()
+local function format_play_time()
+  return string.format("%d:%02d", global.ph, global.pm % 60)
+end
+
+local function format_game_time()
   return string.format("%ud %02u:%02u", global.day, global.h, global.m)
 end
 
 local function init_globals()
+  global.mod_gui_layout_updated = false
   global.ticks = global.ticks or 0
-  global.cycles = global.cycles or 0
   global.surface = game.surfaces.nauvis
-  global.h_prev = global.h_prev or 23
   global.always_day = global.always_day or -1 -- -1 to force update of the icon at first install
   global.refresh_always_day = true
 
@@ -64,27 +68,42 @@ local function init_globals()
 end
 
 function build_gui(player)
-  local root = player.gui.screen.timer_root
+  if not global.mod_gui_layout_updated and player.gui.top.mod_gui_button_flow then
+    player.gui.top.mod_gui_button_flow.style.top_padding = 0
+    player.gui.top.mod_gui_button_flow.style.left_padding = 0
+    global.mod_gui_layout_updated = true
+  end
+
+  local root = player.gui.top.timer_root
+
 
   if root == nil and global.display then
-    root = player.gui.screen.add({
+    root = player.gui.top.add({
       type = "flow",
       name = "timer_root",
       direction = "horizontal",
-      style = "timer_root_style"
+      style = "timer_root_style",
     })
 
-    local button_time = root.add({
+    root.add({
       type = "button",
-      name = "timer_time",
-      caption = format_time(),
-      style = "timer_time_style"
+      name = "timer_play_time",
+      caption = format_play_time(),
+      style = "timer_play_time_style",
+      ignored_by_interaction = true,
+    })
+
+    root.add({
+      type = "button",
+      name = "timer_game_time",
+      caption = format_game_time(),
+      style = "timer_game_time_style",
     })
 
     local button_daynight = root.add({
       type = "sprite-button",
       name = "timer_daynight",
-      style = "timer_daynight_style"
+      style = "timer_daynight_style",
     })
 
     if global.surface.always_day then
@@ -104,9 +123,9 @@ function update_gui()
         local root = build_gui(player)
 
         if game.speed == 1 then
-          root.timer_time.style.font_color = COLORS.white
+          root.timer_game_time.style.font_color = COLORS.white
         else
-          root.timer_time.style.font_color = COLORS.yellow
+          root.timer_game_time.style.font_color = COLORS.yellow
         end
 
         if global.surface.always_day then
@@ -140,21 +159,23 @@ function main.tick()
     get_time()
 
     if global.display then
-      local time = format_time()
+      local play_time = format_play_time()
+      local game_time = format_game_time()
       local root
 
       for _, player in pairs(game.players) do
-        if player.connected and player.gui.screen.timer_root then
-          root = player.gui.screen.timer_root
+        if player.connected and player.gui.top.timer_root then
+          root = player.gui.top.timer_root
 
-          if root.timer_time == nil then
+          if root.timer_play_time == nil then
             root.destroy()
             init_player(player)
             update_gui()
-            root = player.gui.screen.timer_root
+            root = player.gui.top.timer_root
           end
 
-          root.timer_time.caption = time
+          root.timer_play_time.caption = play_time
+          root.timer_game_time.caption = game_time
 
           if global.refresh_always_day then
             if global.surface.always_day then
@@ -177,7 +198,7 @@ function main.click(e)
   local player = game.players[e.player_index]
 
   if player.admin then
-    if e.element.name == "timer_time" then
+    if e.element.name == "timer_game_time" then
       toggle_speed()
       update_gui()
     elseif e.element.name == "timer_daynight" then
