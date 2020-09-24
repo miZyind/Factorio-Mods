@@ -71,8 +71,21 @@ local function find_targeting(entity)
   return targeting
 end
 
-
 local function order_deconstruction(drill)
+  if drill.to_be_deconstructed(drill.force) then return end
+
+  if drill.fluidbox and #drill.fluidbox > 0 then return end
+
+  if next(drill.circuit_connected_entities.red) ~= nil or next(drill.circuit_connected_entities.green) ~= nil then return end
+
+  if not drill.minable then return end
+
+  if not drill.prototype.selectable_in_game then return end
+
+  if drill.has_flag("not-deconstructable") then return end
+
+  drill.order_deconstruction(drill.force, drill.last_user)
+
   local target = find_target(drill)
 
   if target ~= nil and target.minable and target.prototype.selectable_in_game then
@@ -87,6 +100,8 @@ local function order_deconstruction(drill)
         if target.to_be_deconstructed(target.force) then
           target.cancel_deconstruction(target.force)
         end
+
+        target.order_deconstruction(target.force, target.last_user)
       end
     end
   end
