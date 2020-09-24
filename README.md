@@ -12,6 +12,7 @@
 - @Supercheese for [Squeak Through](https://mods.factorio.com/mod/Squeak%20Through)
 - @Earendel for [Bullet Trails](https://mods.factorio.com/mod/bullet-trails)
 - @keyboardhack for [Wai Tex](https://mods.factorio.com/mod/WaiTex_Full)
+- @DellAquila for [Humanoids](https://mods.factorio.com/mod/Humanoids)
 - @trold for [Bottleneck](https://mods.factorio.com/mod/Bottleneck)
 
 ## 💠 Development Environment & Tools
@@ -26,6 +27,7 @@
 |    Dodger   |           No more frustration when walking about your base          |
 |   Gunfire   |                         Adds gunfire effects                        |
 | HD Textures |             HD textures for the remaining vanilla items             |
+|  Humanized  |                      Turns monsters into people                     |
 |    Signal   |                    Locates input starved machines                   |
 |    Timer    |                  Clock, daylight, game speed tweaks                 |
 
