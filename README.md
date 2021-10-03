@@ -3,7 +3,14 @@
 [![Visual Studio](https://img.shields.io/badge/VSCode-007acc?style=for-the-badge&logo=visual-studio-code)](https://code.visualstudio.com)
 [![Lua](https://img.shields.io/badge/5.2.1-2c2d72?style=for-the-badge&logo=lua)](https://www.lua.org)
 
+## 🌌 Usage
+1. Create a `mods` folder in `C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\base`.
+2. Put all the files of this project in the `mods` folder.
+3. Copy `control.lua` & `data-final-fixes.lua` and paste to the `C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\base` folder.
+4. Enjoy!
+
 ## 🔮 Tested Game Version
+- **1.1**
 - **1.0**
 
 ## 🙏 Thanks To
